@@ -73,8 +73,7 @@ def main(
         roaster = CodeRoaster(llm_provider)
 
         # Display info message
-        model_info = f" with model {model}" if model else ""
-        formatter.display_info(f"Roasting {file_path} using {provider.capitalize()}{model_info}...")
+        formatter.display_info(f"Roasting {file_path} using {provider} with model {llm_provider.get_model_name}...")
 
         # Roast the code
         code_content, roast_content, language = roaster.roast_code(file_path)

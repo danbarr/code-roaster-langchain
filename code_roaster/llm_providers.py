@@ -29,6 +29,15 @@ class LLMProvider(ABC):
         self.llm = None
         self.initialize()
 
+    @property
+    def get_model_name(self) -> str:
+        """Get the actual model name being used.
+        
+        Returns:
+            The model name as a string
+        """
+        return self.model_name
+
     @abstractmethod
     def initialize(self) -> None:
         """Initialize the LLM client."""
@@ -124,6 +133,8 @@ class OpenAIProvider(LLMProvider):
 
         api_endpoint = self.api_endpoint or Config.get_api_endpoint("openai")
         model_name = self.model_name or Config.get_model("openai")
+        # Update self.model_name with the actual model being used
+        self.model_name = model_name
 
         self.llm = ChatOpenAI(
             api_key=api_key,
@@ -145,6 +156,8 @@ class AnthropicProvider(LLMProvider):
 
         api_endpoint = self.api_endpoint or Config.get_api_endpoint("anthropic")
         model_name = self.model_name or Config.get_model("anthropic")
+        # Update self.model_name with the actual model being used
+        self.model_name = model_name
 
         self.llm = ChatAnthropic(
             api_key=api_key,
@@ -162,6 +175,8 @@ class OllamaProvider(LLMProvider):
         """Initialize the Ollama client."""
         api_endpoint = self.api_endpoint or Config.get_api_endpoint("ollama")
         model_name = self.model_name or Config.get_model("ollama")
+        # Update self.model_name with the actual model being used
+        self.model_name = model_name
 
         self.llm = ChatOllama(
             base_url=api_endpoint,
@@ -182,6 +197,8 @@ class OpenRouterProvider(LLMProvider):
 
         api_endpoint = self.api_endpoint or Config.get_api_endpoint("openrouter")
         model_name = self.model_name or Config.get_model("openrouter")
+        # Update self.model_name with the actual model being used
+        self.model_name = model_name
 
         self.llm = ChatOpenAI(
             api_key=api_key,
